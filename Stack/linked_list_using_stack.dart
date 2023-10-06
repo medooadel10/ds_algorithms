@@ -14,9 +14,10 @@ class Stack<T> {
     if (isEmpty())
       print("Stack empty on pop");
     else {
-      Node temp = Node(item: top?.item, next: top);
+      Node? temp = top;
       top = top?.next;
-      temp.next = null;
+      temp = temp?.next;
+      temp = null;
     }
     return stackTop;
   }
