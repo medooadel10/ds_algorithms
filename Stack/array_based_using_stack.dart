@@ -1,50 +1,66 @@
 class Stack {
-  late int top;
-  late List<dynamic> items = List.filled(100, null);
-  Stack({this.top = -1});
+  int top;
+  List<dynamic> items;
+  Stack({this.top = -1, required this.items});
 
-  bool isEmpty() => top < 0;
-  bool isFull() => top >= items.length - 1;
-
-  void push(dynamic element) {
-    if (isFull())
-      print("Stack full on push");
-    else {
-      top++;
-      items[top] = element;
+  bool isFull() {
+    if (top == items.length) {
+      return true;
     }
+    return false;
+  }
+
+  bool isEmpty() {
+    if (top == -1) {
+      return true;
+    }
+    return false;
+  }
+
+  void push(dynamic item) {
+    if (isFull()) {
+      print('The Stack is full');
+      return;
+    }
+    top++;
+    items.add(item);
   }
 
   dynamic pop() {
-    if (isEmpty())
-      print("Stack empty on pop");
-    else {
-      dynamic stackTop = items[top];
-      top--;
-      return stackTop;
+    if (isEmpty()) {
+      print('The Stack is empty');
+      return;
     }
+    dynamic item = items.removeAt(top);
+    top--;
+    return item;
   }
 
-  dynamic getStackTop() {
-    if (isEmpty())
-      print("Stack empty on get the top");
-    else {
-      dynamic stackTop = items[top];
-      return stackTop;
+  dynamic getTop() {
+    if (isEmpty()) {
+      print('The Stack is empty');
+      return;
     }
+    return items[top];
   }
 
-  void printStack() {
-    print("[ ");
-    for (int i = top; i >= 0; i--) {
-      print("${items[i]} ");
+  dynamic printStack() {
+    if (isEmpty()) {
+      print('The Stack is empty');
+      return;
     }
-    print("]");
+    print('[');
+    for (dynamic item in items) {
+      print(item);
+    }
+    print(']');
   }
 }
 
 int main() {
-  Stack stack = Stack();
+  List<dynamic> items = [];
+  print(items);
+  Stack stack = Stack(items: items);
   stack.push(12);
   stack.push(28);
   stack.push(98);
@@ -57,9 +73,10 @@ int main() {
   stack.push(25);
   stack.push(20);
   stack.pop();
+  stack.pop();
 
   stack.printStack();
-  print("Stack Top : ${stack.getStackTop()}");
+  print("Stack Top : ${stack.getTop()}");
 
   return 0;
 }

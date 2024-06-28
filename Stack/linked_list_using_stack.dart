@@ -1,54 +1,59 @@
 class Stack<T> {
-  Node? top, current;
-  Stack({this.top = null});
+  Node? _top;
+  Stack();
+  bool isEmpty() {
+    if (_top == null) return true;
+    return false;
+  }
 
   void push(T item) {
-    Node newNode = Node(item: item, next: top);
-    top = newNode;
+    Node newNode = Node(item, _top);
+    _top = newNode;
   }
 
-  bool isEmpty() => top == null;
-  T pop() {
-    T stackTop = top?.item;
-
-    if (isEmpty())
-      print("Stack empty on pop");
-    else {
-      Node? temp = top;
-      top = top?.next;
-      temp = temp?.next;
-      temp = null;
-    }
-    return stackTop;
-  }
-
-  T getStackTop() {
+  T? pop() {
     if (isEmpty()) {
-      print("Stack empty on get top");
+      print('The Stack is empty');
+      return null;
     }
-    return top?.item;
+    Node? temp = _top;
+    T item = temp?.item;
+    _top = temp?.next;
+    temp = null;
+    return item;
   }
 
-  void display() {
-    current = top;
-    print("[ ");
-    while (current != null) {
-      print(current?.item);
-      current = current?.next;
+  T? getStackTop() {
+    if (isEmpty()) {
+      print('The Stack is empty');
+      return null;
     }
-    print(" ] ");
+    return _top?.item;
+  }
+
+  void printStack() {
+    if (isEmpty()) {
+      print('The Stack is empty');
+      return;
+    }
+    print('[');
+    Node? current = _top;
+    while (current != null) {
+      print(current.item);
+      current = current.next;
+    }
+    print(']');
   }
 }
 
-class Node<T> {
-  T item;
+class Node {
+  dynamic item;
   Node? next;
-
-  Node({required this.item, required this.next});
+  Node(this.item, this.next);
 }
 
 int main() {
-  Stack stack = Stack();
+  Stack<int> stack = Stack();
 
   stack.push(5);
   stack.push(54);
@@ -59,8 +64,10 @@ int main() {
   stack.push(7);
 
   stack.pop();
+  stack.pop();
+  stack.pop();
 
-  stack.display();
+  stack.printStack();
 
   dynamic top = stack.getStackTop();
   print("Top : $top");
